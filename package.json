@@ -1,0 +1,25 @@
+{
+  "name": "streamr-exporter",
+  "version": "0.1.0",
+  "description": "Exports count of messages for a given streamr stream address",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/streamr-dev/streamr-exporter.git"
+  },
+  "keywords": [
+    "prometheus",
+    "exporter",
+    "streamr",
+    "grafana"
+  ],
+  "author": "Daisy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/streamr-dev/streamr-exporter/issues"
+  },
+  "homepage": "https://github.com/streamr-dev/streamr-exporter#readme"
+}
