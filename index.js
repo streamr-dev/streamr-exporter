@@ -2,7 +2,6 @@ const streamrClient = require("streamr-client")
 const { Wallet } = require("ethers");
 const streamId = 'streamr.eth/demos/helsinki-trams'
 var count = 0
-var privateKey = "4a878f0976a29e8a9d7b885fc0760bd4dbaebffc3281f460ca63ddbbbc13b371"
 const main = async () = {
     isValidPrivateKey(privateKey)
     const client = new StreamrClient({
