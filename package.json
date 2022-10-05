@@ -4,8 +4,8 @@
   "description": "Exports count of messages for a given streamr stream address",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "debug": "nodemon --inspect index.js"
+    "start": "node src/cmd/streamrExporter/main.js",
+    "debug": "nodemon --inspect src/cmd/streamrExporter/main.js -p 9099"
   },
   "repository": {
     "type": "git",
@@ -25,14 +25,17 @@
   "homepage": "https://github.com/streamr-dev/streamr-exporter#readme",
   "dependencies": {
     "axios": "1.0.0",
+    "commander": "9.4.1",
     "dotenv": "16.0.3",
     "ethers": "5.7.1",
     "express": "4.18.1",
     "flat": "5.0.2",
+    "pino": "8.6.1",
+    "process": "0.11.10",
     "prom-client": "14.1.0",
     "streamr-client": "6.0.10"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "2.0.19"
   }
 }
