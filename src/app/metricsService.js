@@ -8,7 +8,7 @@ class MetricsService {
         }
         this.logger = logger
         this.helsinki_trams_message_count = new client.Counter({
-            name: 'helsinki_trams_message_count',
+            name: 'streamr_helsinki_trams_message_count',
             help: 'Counts messages arriving to the streamr.eth/demos/helsinki-trams stream',
         });
         this.guages = []
@@ -23,13 +23,13 @@ class MetricsService {
             this.helsinki_trams_message_count.inc()
         })
         this.streamr.subscribe(this.network_metrics, (message) => {
-            this.proccessMetric(message, "network_metrics_");
+            this.proccessMetric(message, "streamr_network_metrics_");
         })
         this.streamr.subscribe(this.DATA_metadata, (message) => {
-            this.proccessMetric(message, "DATA_metadata_");
+            this.proccessMetric(message, "streamr_DATA_metadata_");
         })
         this.streamr.subscribe(this.binance_ticker, (message) => {
-            this.proccessMetric(message, "binance_ticker_");
+            this.proccessMetric(message, "streamr_binance_ticker_");
         })
     }
 
