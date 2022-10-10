@@ -4,7 +4,7 @@
   "description": "Exports count of messages for a given streamr stream address",
   "main": "index.js",
   "scripts": {
-    "start": "node src/cmd/streamrExporter/main.js",
+    "start": "node src/cmd/streamrExporter/main.js -p 9099",
     "debug": "nodemon --inspect src/cmd/streamrExporter/main.js -p 9099"
   },
   "repository": {
