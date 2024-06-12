@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/streamr-dev/streamr-exporter#readme",
   "dependencies": {
-    "@streamr/sdk": "100.2.4",
+    "@streamr/sdk": "^100.2.4",
+    "@streamr/utils": "^100.2.4",
     "axios": "1.0.0",
     "commander": "9.4.1",
     "dotenv": "16.0.3",
