@@ -46,7 +46,7 @@ class MetricsService {
         return {metrics,metricsContentType}
     }
     close(){
-        this.streamr.unsubscrib()
+        this.streamr.unsubscribe()
     }
     proccessMetric(message,guage_name_prefix) {
         try {
