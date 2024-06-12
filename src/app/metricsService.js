@@ -34,14 +34,14 @@ class MetricsService {
               this.proccessMetric(message, "streamr_binance_ticker_");
           })
         } catch (error) {
-          logger.error(error)
+          logger.error("Error in subscribtion : "+error)
         }
 
     }
 
     async getMetrics(){
         let metrics = await client.register.metrics()
-        this.logger.debug("Metrics", metrics);
+        this.logger.debug("Getting Metrics", metrics);
         let metricsContentType = client.register.contentType
         return {metrics,metricsContentType}
     }
@@ -55,13 +55,18 @@ class MetricsService {
             delimiter: "_",
             object: true,
             transformKey: function (key) {
-              key = key.replace(/^("|')(.*)("|')$/, '');
               key = key.replaceAll('-', '_');
+              key = key.replaceAll('.', '_');
+              key = key.replace(/^("|')(.*)("|')$/, '');
               return key;
             }
           });
+          this.logger.debug("Metrics Object is: ");
           this.logger.debug(metrics);
           for (const [metric_name, metric_value] of Object.entries(metrics)) {
+            if (metric_name == null || metric_name == "" || metric_name == undefined) {
+              continue;
+              }
             this.logger.debug("Metric name type " + metric_name + typeof (metric_name));
             if (!this.guages[guage_name_prefix + metric_name]) {
               this.guages[guage_name_prefix + metric_name] = new client.Gauge({ name: guage_name_prefix + metric_name, help: guage_name_prefix + metric_name });
@@ -71,7 +76,8 @@ class MetricsService {
             }
           }
         } catch (error) {
-          console.error(error);
+          this.logger.error("ERROR OCCURED in creating or setting guage : " + error + " : " + error.stack);
+          throw error
         }
       }
 }
