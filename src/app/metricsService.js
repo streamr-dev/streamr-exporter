@@ -1,4 +1,4 @@
-const StreamrClient = require("streamr-client")
+const {StreamrClient} = require("@streamr/sdk")
 const client = require('prom-client');
 const flatten = require("flat")
 class MetricsService {
@@ -17,20 +17,26 @@ class MetricsService {
         this.DATA_metadata = '0x7d275b79eaed6b00eb1fe7e1174c1c6f2e711283/DATA-metadata'
         this.binance_ticker = 'binance-streamr.eth/DATAUSDT/ticker'
         this.count = 0
-        this.streamr = new StreamrClient();
-        this.logger.debug("Start suscription")
-        this.streamr.subscribe(this.helsinki_trams, (message) => {
-            this.helsinki_trams_message_count.inc()
-        })
-        this.streamr.subscribe(this.network_metrics, (message) => {
-            this.proccessMetric(message, "streamr_network_metrics_");
-        })
-        this.streamr.subscribe(this.DATA_metadata, (message) => {
-            this.proccessMetric(message, "streamr_DATA_metadata_");
-        })
-        this.streamr.subscribe(this.binance_ticker, (message) => {
-            this.proccessMetric(message, "streamr_binance_ticker_");
-        })
+        try {
+          this.streamr = new StreamrClient();
+          this.logger.debug("Start subscription")
+          this.streamr.subscribe(this.helsinki_trams, (message) => {
+              // this.logger.debug(message)
+              this.helsinki_trams_message_count.inc()
+          })
+          this.streamr.subscribe(this.network_metrics, (message) => {
+              this.proccessMetric(message, "streamr_network_metrics_");
+          })
+          this.streamr.subscribe(this.DATA_metadata, (message) => {
+              this.proccessMetric(message, "streamr_DATA_metadata_");
+          })
+          this.streamr.subscribe(this.binance_ticker, (message) => {
+              this.proccessMetric(message, "streamr_binance_ticker_");
+          })
+        } catch (error) {
+          logger.error(error)
+        }
+
     }
 
     async getMetrics(){
@@ -56,7 +62,7 @@ class MetricsService {
           });
           this.logger.debug(metrics);
           for (const [metric_name, metric_value] of Object.entries(metrics)) {
-            this.logger.debug("Metric name type", metric_name, typeof (metric_name));
+            this.logger.debug("Metric name type " + metric_name + typeof (metric_name));
             if (!this.guages[guage_name_prefix + metric_name]) {
               this.guages[guage_name_prefix + metric_name] = new client.Gauge({ name: guage_name_prefix + metric_name, help: guage_name_prefix + metric_name });
               this.guages[guage_name_prefix + metric_name].set(Number(metric_value));
